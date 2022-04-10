@@ -14,8 +14,8 @@ export class UsersService {
     private usersModel: Model<UsersDocument>,
   ) {}
 
-  async findOne(user_uuid: string): Promise<User> {
-    return await this.usersModel.findOne({ user_uuid });
+  async findOne(email: string): Promise<User> {
+    return await this.usersModel.findOne({ email });
   }
 
   async create(createUserInput: CreateUserInput): Promise<User> {

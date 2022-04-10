@@ -19,7 +19,7 @@ export class UsersResolver {
   }
 
   @Query(() => User)
-  getUser(@Args('user_uuid') user_uuid: string) {
-    return this.userService.findOne(user_uuid);
+  getUser(@Args('email') email: string) {
+    return this.userService.findOne(email);
   }
 }
