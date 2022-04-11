@@ -4,6 +4,7 @@
 
 input CreateUserInput {
   email: String!
+  user_uuid: String!
 }
 
 """
