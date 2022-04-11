@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { UsersDocument } from './users.schema';
 import { Model } from 'mongoose';
 import { User } from './models/users.model';
-import { v4 as uuidv4 } from 'uuid';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 
@@ -21,7 +20,6 @@ export class UsersService {
   async create(createUserInput: CreateUserInput): Promise<User> {
     const newUser = new this.usersModel({
       ...createUserInput,
-      user_uuid: uuidv4(),
       created_at: new Date(),
       updated_at: new Date(),
       is_onboarded: false,
