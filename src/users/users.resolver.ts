@@ -1,8 +1,25 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { CreateUserInput } from './dto/create-user.input';
+import { UpdateUserInput } from './dto/update-user.input';
+import { User } from './models/users.model';
+import { UsersService } from './users.service';
+
 @Resolver()
 export class UsersResolver {
-  @Query(() => String)
-  sayHello() {
-    return 'Hello';
+  constructor(private userService: UsersService) {}
+
+  @Mutation(() => User)
+  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.userService.create(createUserInput);
+  }
+
+  @Mutation(() => User)
+  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+    return this.userService.update(updateUserInput);
+  }
+
+  @Query(() => User)
+  getUser(@Args('user_uuid') user_uuid: string) {
+    return this.userService.findOne(user_uuid);
   }
 }
