@@ -17,7 +17,7 @@ type Mutation {
 }
 
 type Query {
-  getUser(email: String!): User!
+  getUser(user_uuid: String!): User!
 }
 
 input UpdateUserInput {
