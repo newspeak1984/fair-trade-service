@@ -29,6 +29,6 @@ export class CreateItemInput {
   @Field()
   status: string;
 
-  @Field()
+  @Field({ nullable: true })
   looking_for?: string;
 }
