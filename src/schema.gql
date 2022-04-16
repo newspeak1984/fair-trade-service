@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateItemInput {
+  category: String!
+  created_at: DateTime!
+  description: String!
+  item_uuid: String!
+  location: String!
+  looking_for: String!
+  name: String!
+  status: String!
+  updated_at: DateTime!
+  user_uuid: String!
+}
+
 input CreateUserInput {
   email: String!
   user_uuid: String!
@@ -12,13 +25,49 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Item {
+  category: String!
+  created_at: DateTime!
+  description: String!
+  item_uuid: String!
+  location: String!
+  looking_for: String!
+  name: String!
+  status: String!
+  updated_at: DateTime!
+  user_uuid: String!
+}
+
 type Mutation {
+  createItem(createUserInput: CreateItemInput!): Item!
   createUser(createUserInput: CreateUserInput!): User!
+  removeItem(item_uuid: String!): Boolean!
+  removeItems(item_uuids: [String!]!): Boolean!
+  updateItem(updateUserInput: UpdateItemInput!): Item!
+  updateItemStatuses(updateStatusInput: UpdateStatusInput!): [Item!]!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  getItem(item_uuid: String!): Item!
+  getItems(item_uuids: [String!]!): [Item!]!
   getUser(user_uuid: String!): User!
+  getUserItems(user_uuid: String!): [Item!]!
+}
+
+input UpdateItemInput {
+  category: String
+  description: String
+  item_uuid: String!
+  location: String
+  looking_for: String
+  name: String
+  status: String
+}
+
+input UpdateStatusInput {
+  item_uuids: [String!]!
+  status: String!
 }
 
 input UpdateUserInput {
