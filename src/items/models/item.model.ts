@@ -26,6 +26,6 @@ export class Item {
   @Field()
   status: string;
 
-  @Field()
+  @Field({ nullable: true })
   looking_for?: string;
 }
