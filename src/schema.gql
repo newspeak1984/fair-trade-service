@@ -4,14 +4,11 @@
 
 input CreateItemInput {
   category: String!
-  created_at: DateTime!
   description: String!
   item_uuid: String!
-  location: String!
-  looking_for: String!
+  looking_for: String
   name: String!
   status: String!
-  updated_at: DateTime!
   user_uuid: String!
 }
 
@@ -30,7 +27,6 @@ type Item {
   created_at: DateTime!
   description: String!
   item_uuid: String!
-  location: String!
   looking_for: String!
   name: String!
   status: String!
@@ -59,7 +55,6 @@ input UpdateItemInput {
   category: String
   description: String
   item_uuid: String!
-  location: String
   looking_for: String
   name: String
   status: String

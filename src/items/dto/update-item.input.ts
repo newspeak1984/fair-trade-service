@@ -15,9 +15,6 @@ export class UpdateItemInput {
   category?: string;
 
   @Field({ nullable: true })
-  location?: string;
-
-  @Field({ nullable: true })
   status?: string;
 
   @Field({ nullable: true })

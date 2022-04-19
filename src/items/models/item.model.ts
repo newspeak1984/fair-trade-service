@@ -17,9 +17,6 @@ export class Item {
   @Field()
   category: string;
 
-  @Field()
-  location: string;
-
   @Field(() => Date)
   created_at?: Date;
 

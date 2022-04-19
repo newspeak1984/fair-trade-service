@@ -20,9 +20,6 @@ export class Item {
   @Prop()
   category: string;
 
-  @Prop()
-  location: string;
-
   @Prop({ type: Date })
   created_at: Date;
 
