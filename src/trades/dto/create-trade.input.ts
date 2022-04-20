@@ -1,0 +1,25 @@
+import { Field, InputType } from '@nestjs/graphql';
+
+@InputType()
+export class CreateTradeInput {
+  @Field()
+  trade_uuid: string;
+
+  @Field()
+  sender_uuid: string;
+
+  @Field()
+  receiver_uuid: string;
+
+  @Field()
+  state: string;
+
+  @Field(() => [String])
+  sender_items: string[];
+
+  @Field(() => [String])
+  receiver_items: string[];
+
+  @Field(() => [String])
+  trade_history: string[];
+}

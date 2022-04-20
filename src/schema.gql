@@ -11,6 +11,16 @@ input CreateItemInput {
   user_uuid: String!
 }
 
+input CreateTradeInput {
+  receiver_items: [String!]!
+  receiver_uuid: String!
+  sender_items: [String!]!
+  sender_uuid: String!
+  state: String!
+  trade_history: [String!]!
+  trade_uuid: String!
+}
+
 input CreateUserInput {
   email: String!
   user_uuid: String!
@@ -36,11 +46,14 @@ type Item {
 
 type Mutation {
   createItem(createItemInput: CreateItemInput!): Item!
+  createTrade(createTradeInput: CreateTradeInput!): Trade!
   createUser(createUserInput: CreateUserInput!): User!
   removeItem(item_uuid: String!): Boolean!
   removeItems(item_uuids: [String!]!): Boolean!
+  removeTrades(trade_uuids: [String!]!): Boolean!
   updateItem(updateItemInput: UpdateItemInput!): Item!
   updateItemStatuses(updateStatusInput: UpdateStatusInput!): [Item!]!
+  updateTradeStates(updateStatesInput: UpdateStatesInput!): [Trade!]!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
@@ -48,8 +61,23 @@ type Query {
   getItem(item_uuid: String!): Item!
   getItems(item_uuids: [String!]!): [Item!]!
   getS3PresignedUrl: String!
+  getTrade(trade_uuid: String!): Trade!
+  getTrades(trade_uuids: [String!]!): [Trade!]!
   getUser(user_uuid: String!): User!
   getUserItems(user_uuid: String!): [Item!]!
+  getUserTrades(user_uuid: String!): [Trade!]!
+}
+
+type Trade {
+  created_at: DateTime!
+  receiver_items: [String!]!
+  receiver_uuid: String!
+  sender_items: [String!]!
+  sender_uuid: String!
+  state: String!
+  trade_history: [String!]!
+  trade_uuid: String!
+  updated_at: DateTime!
 }
 
 input UpdateItemInput {
@@ -60,6 +88,11 @@ input UpdateItemInput {
   looking_for: String
   name: String
   status: String
+}
+
+input UpdateStatesInput {
+  state: String!
+  trade_uuids: [String!]!
 }
 
 input UpdateStatusInput {
