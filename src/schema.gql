@@ -5,10 +5,9 @@
 input CreateItemInput {
   category: String!
   description: String!
-  item_uuid: String!
+  image_url: String!
   looking_for: String
   name: String!
-  status: String!
   user_uuid: String!
 }
 
@@ -26,8 +25,9 @@ type Item {
   category: String!
   created_at: DateTime!
   description: String!
+  image_url: String!
   item_uuid: String!
-  looking_for: String!
+  looking_for: String
   name: String!
   status: String!
   updated_at: DateTime!
@@ -47,6 +47,7 @@ type Mutation {
 type Query {
   getItem(item_uuid: String!): Item!
   getItems(item_uuids: [String!]!): [Item!]!
+  getS3PresignedUrl: String!
   getUser(user_uuid: String!): User!
   getUserItems(user_uuid: String!): [Item!]!
 }
@@ -54,6 +55,7 @@ type Query {
 input UpdateItemInput {
   category: String
   description: String
+  image_url: String
   item_uuid: String!
   looking_for: String
   name: String

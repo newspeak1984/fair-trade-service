@@ -31,6 +31,9 @@ export class Item {
 
   @Prop()
   looking_for: string;
+
+  @Prop()
+  image_url: string;
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);
