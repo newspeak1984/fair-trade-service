@@ -35,12 +35,12 @@ export class ItemsResolver {
   }
 
   @Mutation(() => Item)
-  createItem(@Args('createUserInput') createItemInput: CreateItemInput) {
+  createItem(@Args('createItemInput') createItemInput: CreateItemInput) {
     return this.itemService.create(createItemInput);
   }
 
   @Mutation(() => Item)
-  updateItem(@Args('updateUserInput') updateItemInput: UpdateItemInput) {
+  updateItem(@Args('updateItemInput') updateItemInput: UpdateItemInput) {
     return this.itemService.update(updateItemInput);
   }
 

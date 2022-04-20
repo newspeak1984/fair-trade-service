@@ -35,11 +35,11 @@ type Item {
 }
 
 type Mutation {
-  createItem(createUserInput: CreateItemInput!): Item!
+  createItem(createItemInput: CreateItemInput!): Item!
   createUser(createUserInput: CreateUserInput!): User!
   removeItem(item_uuid: String!): Boolean!
   removeItems(item_uuids: [String!]!): Boolean!
-  updateItem(updateUserInput: UpdateItemInput!): Item!
+  updateItem(updateItemInput: UpdateItemInput!): Item!
   updateItemStatuses(updateStatusInput: UpdateStatusInput!): [Item!]!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
