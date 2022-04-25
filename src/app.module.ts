@@ -10,6 +10,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ItemsModule } from './items/items.module';
 import { AwsModule } from './aws/aws.module';
+import { TradesModule } from './trades/trades.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { AwsModule } from './aws/aws.module';
     UsersModule,
     ItemsModule,
     AwsModule,
+    TradesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
