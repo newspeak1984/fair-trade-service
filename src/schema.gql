@@ -17,7 +17,7 @@ input CreateTradeInput {
   sender_items: [String!]!
   sender_uuid: String!
   state: String!
-  trade_history: [String!]!
+  trade_history: String!
   trade_uuid: String!
 }
 
@@ -75,7 +75,7 @@ type Trade {
   sender_items: [String!]!
   sender_uuid: String!
   state: String!
-  trade_history: [String!]!
+  trade_history: String!
   trade_uuid: String!
   updated_at: DateTime!
 }

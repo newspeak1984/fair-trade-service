@@ -29,8 +29,8 @@ export class Trade {
   @Prop({ type: Date })
   updated_at: Date;
 
-  @Prop({ type: [String] })
-  trade_history: string[];
+  @Prop()
+  trade_history: string;
 }
 
 export const TradeSchema = SchemaFactory.createForClass(Trade);

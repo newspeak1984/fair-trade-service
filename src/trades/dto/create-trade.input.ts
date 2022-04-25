@@ -20,6 +20,6 @@ export class CreateTradeInput {
   @Field(() => [String])
   receiver_items: string[];
 
-  @Field(() => [String])
-  trade_history: string[];
+  @Field()
+  trade_history: string;
 }

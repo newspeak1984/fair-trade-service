@@ -25,6 +25,6 @@ export class Trade {
   @Field(() => Date)
   updated_at: Date;
 
-  @Field(() => [String])
-  trade_history: string[];
+  @Field()
+  trade_history: string;
 }
