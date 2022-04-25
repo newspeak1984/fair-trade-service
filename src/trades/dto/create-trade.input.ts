@@ -3,9 +3,6 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateTradeInput {
   @Field()
-  trade_uuid: string;
-
-  @Field()
   sender_uuid: string;
 
   @Field()

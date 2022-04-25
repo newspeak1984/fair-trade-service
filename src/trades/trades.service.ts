@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { Trade } from "./models/trade.model";
 import { CreateTradeInput } from "./dto/create-trade.input";
 import { UpdateStatesInput } from "./dto/update-state.input";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TradesService {
@@ -46,6 +47,7 @@ export class TradesService {
   async create(createTradeInput: CreateTradeInput): Promise<Trade> {
     const newTrade = new this.tradesModel({
       ...createTradeInput,
+      trade_uuid: uuidv4(),
       created_at: new Date(),
       updated_at: new Date(),
     });

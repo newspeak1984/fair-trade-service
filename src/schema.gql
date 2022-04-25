@@ -18,7 +18,6 @@ input CreateTradeInput {
   sender_uuid: String!
   state: String!
   trade_history: String!
-  trade_uuid: String!
 }
 
 input CreateUserInput {
