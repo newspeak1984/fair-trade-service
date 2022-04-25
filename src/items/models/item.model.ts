@@ -28,4 +28,7 @@ export class Item {
 
   @Field({ nullable: true })
   looking_for?: string;
+
+  @Field()
+  image_url: string;
 }

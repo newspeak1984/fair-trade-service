@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ItemsModule } from './items/items.module';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ItemsModule } from './items/items.module';
     MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
     UsersModule,
     ItemsModule,
+    AwsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

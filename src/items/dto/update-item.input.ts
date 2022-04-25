@@ -19,4 +19,7 @@ export class UpdateItemInput {
 
   @Field({ nullable: true })
   looking_for?: string;
+
+  @Field({ nullable: true })
+  image_url: string;
 }

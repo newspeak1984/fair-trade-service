@@ -1,11 +1,12 @@
 import { UpdateItemInput } from './dto/update-item.input';
 import { CreateItemInput } from './dto/create-item.input';
 import { ItemDocument } from './items.schema';
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Item } from './models/item.model';
 import { UpdateStatusInput } from './dto/update-status.input';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class ItemsService {
@@ -19,10 +20,10 @@ export class ItemsService {
   }
 
   async findMany(item_uuids: string[]): Promise<Item[]> {
-    return await this.itemsModel.find({ 
+    return await this.itemsModel.find({
       item_uuid: {
-        $in: item_uuids
-      } 
+        $in: item_uuids,
+      },
     });
   }
 
@@ -38,8 +39,8 @@ export class ItemsService {
   async removeMany(item_uuids: string[]): Promise<boolean> {
     const res = await this.itemsModel.deleteMany({
       item_uuid: {
-        $in: item_uuids
-      }
+        $in: item_uuids,
+      },
     });
     return res.deletedCount == item_uuids.length;
   }
@@ -47,6 +48,8 @@ export class ItemsService {
   async create(createItemInput: CreateItemInput): Promise<Item> {
     const newItem = new this.itemsModel({
       ...createItemInput,
+      item_uuid: uuidv4(),
+      status: 'listed',
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -62,7 +65,7 @@ export class ItemsService {
       )
       .exec();
 
-      return await this.findOne(updateItemInput.item_uuid);
+    return await this.findOne(updateItemInput.item_uuid);
   }
 
   async updateStatuses(updateStatusInput: UpdateStatusInput): Promise<Item[]> {
@@ -74,5 +77,4 @@ export class ItemsService {
       .exec();
     return await this.findMany(updateStatusInput.item_uuids);
   }
-
 }
