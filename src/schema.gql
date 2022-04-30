@@ -56,9 +56,15 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
+type Options {
+  name: String!
+  options: [String!]!
+}
+
 type Query {
   getItem(item_uuid: String!): Item!
   getItems(item_uuids: [String!]!): [Item!]!
+  getOptions(name: String!): Options!
   getS3PresignedUrl: String!
   getTrade(trade_uuid: String!): Trade!
   getTrades(trade_uuids: [String!]!): [Trade!]!
