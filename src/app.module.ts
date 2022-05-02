@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
 import { ItemsModule } from './items/items.module';
 import { AwsModule } from './aws/aws.module';
 import { TradesModule } from './trades/trades.module';
+import { OptionsModule } from './options/options.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { TradesModule } from './trades/trades.module';
     ItemsModule,
     AwsModule,
     TradesModule,
+    OptionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
