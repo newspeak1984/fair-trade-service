@@ -43,6 +43,17 @@ type Item {
   user_uuid: String!
 }
 
+type ItemPagination {
+  cursor: String
+  items: [Item!]!
+}
+
+input ItemPaginationInput {
+  cursor: String
+  cursor_type: String!
+  quantity: Float!
+}
+
 type Mutation {
   createItem(createItemInput: CreateItemInput!): Item!
   createTrade(createTradeInput: CreateTradeInput!): Trade!
@@ -63,6 +74,7 @@ type Options {
 
 type Query {
   getItem(item_uuid: String!): Item!
+  getItemPagination(itemPaginationInput: ItemPaginationInput!): ItemPagination!
   getItems(item_uuids: [String!]!): [Item!]!
   getOptions(name: String!): Options!
   getS3PresignedUrl: String!
