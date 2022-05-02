@@ -38,7 +38,7 @@ export class ItemsService {
     const encode = (str: string):string => Buffer.from(str, 'binary').toString('base64');
 
     const quantity = itemPaginationInput.quantity;
-    let items, lastElementAttribute = "";
+    let items = [], lastElementAttribute = "";
 
     if (itemPaginationInput.cursor) {
       items = await this.itemsModel.find({ [itemPaginationInput.cursor_type]: { $lt : decode(itemPaginationInput.cursor) } })
