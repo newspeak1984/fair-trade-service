@@ -39,17 +39,16 @@ export class ItemsService {
 
     const quantity = itemPaginationInput.quantity;
     let items, lastElementAttribute = "";
-    if (itemPaginationInput.cursor_type === 'Date') {
-      if (itemPaginationInput.cursor) {
-        items = await this.itemsModel.find({ updated_at: { $lt : decode(itemPaginationInput.cursor) } })
-        .sort({ updated_at: -1 })
-        .limit(quantity);
-      } else {
-        items = await this.itemsModel.find().sort({ updated_at: -1 }).limit(quantity);
-      }
-      lastElementAttribute = items[items.length-1].updated_at.toString();
+
+    if (itemPaginationInput.cursor) {
+      items = await this.itemsModel.find({ [itemPaginationInput.cursor_type]: { $lt : decode(itemPaginationInput.cursor) } })
+      .sort({ updated_at: -1 })
+      .limit(quantity);
     } else {
-      items = await this.itemsModel.find();
+      items = await this.itemsModel.find().sort({ [itemPaginationInput.cursor_type]: -1 }).limit(quantity);
+    }
+    if (items.length) {
+      lastElementAttribute = items[items.length-1][itemPaginationInput.cursor_type].toString();
     }
     
     return {items: items, cursor: encode(lastElementAttribute)};
