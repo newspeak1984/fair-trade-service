@@ -1,3 +1,4 @@
+import { ItemPaginationInput } from './dto/item-pagination.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { CreateItemInput } from './dto/create-item.input';
 import { ItemDocument } from './items.schema';
@@ -7,6 +8,7 @@ import { Model } from 'mongoose';
 import { Item } from './models/item.model';
 import { UpdateStatusInput } from './dto/update-status.input';
 import { v4 as uuidv4 } from 'uuid';
+import { ItemPagination } from './models/item-pagination.model';
 
 @Injectable()
 export class ItemsService {
@@ -29,6 +31,27 @@ export class ItemsService {
 
   async findAll(user_uuid: string): Promise<Item[]> {
     return await this.itemsModel.find({ user_uuid });
+  }
+
+  async findInOrder(itemPaginationInput: ItemPaginationInput): Promise<ItemPagination> {
+    const decode = (str: string):string => Buffer.from(str, 'base64').toString('binary');
+    const encode = (str: string):string => Buffer.from(str, 'binary').toString('base64');
+
+    const quantity = itemPaginationInput.quantity;
+    let items = [], lastElementAttribute = "";
+
+    if (itemPaginationInput.cursor) {
+      items = await this.itemsModel.find({ [itemPaginationInput.cursor_type]: { $lt : decode(itemPaginationInput.cursor) } })
+      .sort({ updated_at: -1 })
+      .limit(quantity);
+    } else {
+      items = await this.itemsModel.find().sort({ [itemPaginationInput.cursor_type]: -1 }).limit(quantity);
+    }
+    if (items.length) {
+      lastElementAttribute = items[items.length-1][itemPaginationInput.cursor_type].toString();
+    }
+    
+    return {items: items, cursor: encode(lastElementAttribute)};
   }
 
   async remove(item_uuid: string): Promise<boolean> {

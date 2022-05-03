@@ -1,3 +1,5 @@
+import { ItemPaginationInput } from './dto/item-pagination.input';
+import { ItemPagination } from './models/item-pagination.model';
 import { UpdateStatusInput } from './dto/update-status.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { CreateItemInput } from './dto/create-item.input';
@@ -22,6 +24,11 @@ export class ItemsResolver {
   @Query(() => [Item])
   getUserItems(@Args('user_uuid') user_uuid: string) {
     return this.itemService.findAll(user_uuid);
+  }
+
+  @Query(() => ItemPagination)
+  getItemPagination(@Args('itemPaginationInput') itemPaginationInput: ItemPaginationInput) {
+     return this.itemService.findInOrder(itemPaginationInput);
   }
 
   @Mutation(() => Boolean)
