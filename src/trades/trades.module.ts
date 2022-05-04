@@ -6,7 +6,7 @@ import { Module } from '@nestjs/common';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: 'trades', schema: TradeSchema}])
+    MongooseModule.forFeature([{ name: 'trades', schema: TradeSchema }]),
   ],
   providers: [TradesResolver, TradesService],
 })
