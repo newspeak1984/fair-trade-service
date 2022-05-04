@@ -33,25 +33,56 @@ export class ItemsService {
     return await this.itemsModel.find({ user_uuid });
   }
 
-  async findInOrder(itemPaginationInput: ItemPaginationInput): Promise<ItemPagination> {
-    const decode = (str: string):string => Buffer.from(str, 'base64').toString('binary');
-    const encode = (str: string):string => Buffer.from(str, 'binary').toString('base64');
+  async findInOrder(
+    itemPaginationInput: ItemPaginationInput,
+  ): Promise<ItemPagination> {
+    const decode = (str: string): string =>
+      Buffer.from(str, 'base64').toString('binary');
+    const encode = (str: string): string =>
+      Buffer.from(str, 'binary').toString('base64');
 
     const quantity = itemPaginationInput.quantity;
-    let items = [], lastElementAttribute = "";
+    let items = [],
+      lastElementAttribute = '';
+
+    let findOptions = {};
+    for (const filter in itemPaginationInput.filters) {
+      if (itemPaginationInput.filters[filter].length) {
+        findOptions = {
+          ...findOptions,
+          [filter]: { $in: itemPaginationInput.filters[filter] },
+        };
+      }
+    }
+
+    if (itemPaginationInput.search) {
+      findOptions = {
+        ...findOptions,
+        $text: { $search: itemPaginationInput.search },
+      };
+    }
 
     if (itemPaginationInput.cursor) {
-      items = await this.itemsModel.find({ [itemPaginationInput.cursor_type]: { $lt : decode(itemPaginationInput.cursor) } })
-      .sort({ updated_at: -1 })
+      findOptions = {
+        ...findOptions,
+        [itemPaginationInput.cursor_type]: {
+          $lt: decode(itemPaginationInput.cursor),
+        },
+      };
+    }
+
+    items = await this.itemsModel
+      .find(findOptions)
+      .sort({ [itemPaginationInput.cursor_type]: -1 })
       .limit(quantity);
-    } else {
-      items = await this.itemsModel.find().sort({ [itemPaginationInput.cursor_type]: -1 }).limit(quantity);
-    }
+
     if (items.length) {
-      lastElementAttribute = items[items.length-1][itemPaginationInput.cursor_type].toString();
+      lastElementAttribute = items[items.length - 1]
+        .toJSON()
+        [itemPaginationInput.cursor_type].toString();
     }
-    
-    return {items: items, cursor: encode(lastElementAttribute)};
+
+    return { items: items, cursor: encode(lastElementAttribute) };
   }
 
   async remove(item_uuid: string): Promise<boolean> {

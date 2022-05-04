@@ -3,13 +3,13 @@ import { ItemPagination } from './models/item-pagination.model';
 import { UpdateStatusInput } from './dto/update-status.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { CreateItemInput } from './dto/create-item.input';
-import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { ItemsService } from "./items.service";
-import { Item } from "./models/item.model";
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { ItemsService } from './items.service';
+import { Item } from './models/item.model';
 
 @Resolver()
 export class ItemsResolver {
-  constructor(private itemService: ItemsService) { }
+  constructor(private itemService: ItemsService) {}
 
   @Query(() => Item)
   getItem(@Args('item_uuid') item_uuid: string) {
@@ -17,7 +17,9 @@ export class ItemsResolver {
   }
 
   @Query(() => [Item])
-  getItems(@Args({ name: 'item_uuids', type: () => [String] }) item_uuids: string[]) {
+  getItems(
+    @Args({ name: 'item_uuids', type: () => [String] }) item_uuids: string[],
+  ) {
     return this.itemService.findMany(item_uuids);
   }
 
@@ -27,8 +29,10 @@ export class ItemsResolver {
   }
 
   @Query(() => ItemPagination)
-  getItemPagination(@Args('itemPaginationInput') itemPaginationInput: ItemPaginationInput) {
-     return this.itemService.findInOrder(itemPaginationInput);
+  getItemPagination(
+    @Args('itemPaginationInput') itemPaginationInput: ItemPaginationInput,
+  ) {
+    return this.itemService.findInOrder(itemPaginationInput);
   }
 
   @Mutation(() => Boolean)
@@ -37,7 +41,9 @@ export class ItemsResolver {
   }
 
   @Mutation(() => Boolean)
-  removeItems(@Args({ name: 'item_uuids', type: () => [String] }) item_uuids: string[]) {
+  removeItems(
+    @Args({ name: 'item_uuids', type: () => [String] }) item_uuids: string[],
+  ) {
     return this.itemService.removeMany(item_uuids);
   }
 
@@ -52,7 +58,9 @@ export class ItemsResolver {
   }
 
   @Mutation(() => [Item])
-  updateItemStatuses(@Args('updateStatusInput') updateStatusInput: UpdateStatusInput) {
+  updateItemStatuses(
+    @Args('updateStatusInput') updateStatusInput: UpdateStatusInput,
+  ) {
     return this.itemService.updateStatuses(updateStatusInput);
   }
 }
