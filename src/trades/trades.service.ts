@@ -1,10 +1,10 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { TradeDocument } from "./trades.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { TradeDocument } from './trades.schema';
 import { Model } from 'mongoose';
-import { Trade } from "./models/trade.model";
-import { CreateTradeInput } from "./dto/create-trade.input";
-import { UpdateStatesInput } from "./dto/update-state.input";
+import { Trade } from './models/trade.model';
+import { CreateTradeInput } from './dto/create-trade.input';
+import { UpdateStatesInput } from './dto/update-state.input';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -21,25 +21,22 @@ export class TradesService {
   async findMany(trade_uuids: string[]): Promise<Trade[]> {
     return await this.tradesModel.find({
       trade_uuid: {
-        $in: trade_uuids
-      }
+        $in: trade_uuids,
+      },
     });
   }
 
   async findAll(user_uuid: string): Promise<Trade[]> {
-    return await this.tradesModel.find({ 
-      $or: [
-        { sender_uuid: user_uuid },
-        { receiver_uuid: user_uuid }
-      ]
+    return await this.tradesModel.find({
+      $or: [{ sender_uuid: user_uuid }, { receiver_uuid: user_uuid }],
     });
   }
 
   async removeMany(trade_uuids: string[]): Promise<boolean> {
     const res = await this.tradesModel.deleteMany({
       trade_uuid: {
-        $in: trade_uuids
-      }
+        $in: trade_uuids,
+      },
     });
     return res.deletedCount == trade_uuids.length;
   }

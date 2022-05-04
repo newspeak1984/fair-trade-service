@@ -1,5 +1,5 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { Item } from "./item.model";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Item } from './item.model';
 
 @ObjectType()
 export class ItemPagination {
