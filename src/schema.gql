@@ -30,6 +30,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input FiltersInput {
+  category: [String!]!
+}
+
 type Item {
   category: String!
   created_at: DateTime!
@@ -51,7 +55,9 @@ type ItemPagination {
 input ItemPaginationInput {
   cursor: String
   cursor_type: String!
+  filters: FiltersInput = {}
   quantity: Float!
+  search: String
 }
 
 type Mutation {

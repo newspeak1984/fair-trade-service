@@ -1,9 +1,9 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 export type ItemDocument = Item & Document;
 
-@Schema()
+@Schema({ autoIndex: true })
 export class Item {
   @Prop()
   item_uuid: string;
@@ -37,3 +37,4 @@ export class Item {
 }
 
 export const ItemSchema = SchemaFactory.createForClass(Item);
+ItemSchema.index({ name: 'text', description: 'text' });
