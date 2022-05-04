@@ -74,12 +74,13 @@ export class ItemsService {
     items = await this.itemsModel
       .find(findOptions)
       .sort({ [itemPaginationInput.cursor_type]: -1 })
-      .limit(quantity);
+      .limit(quantity + 1);
 
-    if (items.length) {
-      lastElementAttribute = items[items.length - 1]
+    if (items.length === quantity + 1) {
+      lastElementAttribute = items[items.length - 2]
         .toJSON()
         [itemPaginationInput.cursor_type].toString();
+      items.pop();
     }
 
     return { items: items, cursor: encode(lastElementAttribute) };
