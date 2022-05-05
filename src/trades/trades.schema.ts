@@ -18,10 +18,10 @@ export class Trade {
   state: string;
 
   @Prop({ type: [String] })
-  sender_items: string[];
+  sender_item_uuids: string[];
 
   @Prop({ type: [String] })
-  receiver_items: string[];
+  receiver_item_uuids: string[];
 
   @Prop({ type: Date })
   created_at: Date;
@@ -30,7 +30,7 @@ export class Trade {
   updated_at: Date;
 
   @Prop()
-  trade_history: string;
+  previous_trade_uuid: string;
 }
 
 export const TradeSchema = SchemaFactory.createForClass(Trade);

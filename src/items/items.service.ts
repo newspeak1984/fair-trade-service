@@ -5,7 +5,7 @@ import { ItemDocument } from './items.schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Item } from './models/item.model';
+import { Item } from './items.schema';
 import { UpdateStatusInput } from './dto/update-status.input';
 import { v4 as uuidv4 } from 'uuid';
 import { ItemPagination } from './models/item-pagination.model';

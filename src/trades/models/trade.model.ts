@@ -1,4 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Item } from '../../items/models/item.model';
+import { User } from '../../users/models/users.model';
 @ObjectType()
 export class Trade {
   @Field()
@@ -14,10 +16,22 @@ export class Trade {
   state: string;
 
   @Field(() => [String])
-  sender_items: string[];
+  sender_item_uuids: string[];
 
   @Field(() => [String])
-  receiver_items: string[];
+  receiver_item_uuids: string[];
+
+  @Field(() => [Item])
+  sender_items: Item[];
+
+  @Field(() => [Item])
+  receiver_items: Item[];
+
+  @Field(() => User)
+  sender: User;
+
+  @Field(() => User)
+  receiver: User;
 
   @Field(() => Date)
   created_at: Date;
@@ -25,6 +39,9 @@ export class Trade {
   @Field(() => Date)
   updated_at: Date;
 
-  @Field()
-  trade_history: string;
+  @Field({ nullable: true })
+  previous_trade_uuid?: string;
+
+  @Field(() => Trade, { nullable: true })
+  previous_trade?: Trade;
 }
