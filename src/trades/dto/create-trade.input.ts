@@ -12,11 +12,11 @@ export class CreateTradeInput {
   state: string;
 
   @Field(() => [String])
-  sender_items: string[];
+  sender_item_uuids: string[];
 
   @Field(() => [String])
-  receiver_items: string[];
+  receiver_item_uuids: string[];
 
-  @Field()
-  trade_history: string;
+  @Field({ nullable: true })
+  previous_trade_uuid?: string;
 }

@@ -12,12 +12,12 @@ input CreateItemInput {
 }
 
 input CreateTradeInput {
-  receiver_items: [String!]!
+  previous_trade_uuid: String
+  receiver_item_uuids: [String!]!
   receiver_uuid: String!
-  sender_items: [String!]!
+  sender_item_uuids: [String!]!
   sender_uuid: String!
   state: String!
-  trade_history: String!
 }
 
 input CreateUserInput {
@@ -44,6 +44,7 @@ type Item {
   name: String!
   status: String!
   updated_at: DateTime!
+  user: User!
   user_uuid: String!
 }
 
@@ -93,12 +94,17 @@ type Query {
 
 type Trade {
   created_at: DateTime!
-  receiver_items: [String!]!
+  previous_trade: Trade
+  previous_trade_uuid: String
+  receiver: User!
+  receiver_item_uuids: [String!]!
+  receiver_items: [Item!]!
   receiver_uuid: String!
-  sender_items: [String!]!
+  sender: User!
+  sender_item_uuids: [String!]!
+  sender_items: [Item!]!
   sender_uuid: String!
   state: String!
-  trade_history: String!
   trade_uuid: String!
   updated_at: DateTime!
 }

@@ -1,4 +1,5 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { User } from 'src/users/models/users.model';
 
 @ObjectType()
 export class Item {
@@ -31,4 +32,7 @@ export class Item {
 
   @Field()
   image_url: string;
+
+  @Field(() => User)
+  user: User;
 }

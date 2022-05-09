@@ -3,13 +3,24 @@ import { ItemPagination } from './models/item-pagination.model';
 import { UpdateStatusInput } from './dto/update-status.input';
 import { UpdateItemInput } from './dto/update-item.input';
 import { CreateItemInput } from './dto/create-item.input';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Query,
+  Resolver,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { ItemsService } from './items.service';
 import { Item } from './models/item.model';
+import { UsersResolver } from 'src/users/users.resolver';
 
-@Resolver()
+@Resolver((of) => Item)
 export class ItemsResolver {
-  constructor(private itemService: ItemsService) {}
+  constructor(
+    private itemService: ItemsService,
+    private userResolver: UsersResolver,
+  ) {}
 
   @Query(() => Item)
   getItem(@Args('item_uuid') item_uuid: string) {
@@ -62,5 +73,10 @@ export class ItemsResolver {
     @Args('updateStatusInput') updateStatusInput: UpdateStatusInput,
   ) {
     return this.itemService.updateStatuses(updateStatusInput);
+  }
+
+  @ResolveField()
+  user(@Parent() item: Item) {
+    return this.userResolver.getUser(item.user_uuid);
   }
 }

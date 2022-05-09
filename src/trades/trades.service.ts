@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { TradeDocument } from './trades.schema';
 import { Model } from 'mongoose';
-import { Trade } from './models/trade.model';
+import { Trade } from './trades.schema';
 import { CreateTradeInput } from './dto/create-trade.input';
 import { UpdateStatesInput } from './dto/update-state.input';
 import { v4 as uuidv4 } from 'uuid';
