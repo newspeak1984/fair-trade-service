@@ -12,6 +12,7 @@ import { TradesService } from './trades.service';
 import { UpdateStatesInput } from './dto/update-state.input';
 import { ItemsResolver } from '../items/items.resolver';
 import { UsersResolver } from '../users/users.resolver';
+import { GraphQLError } from 'graphql';
 
 @Resolver((of) => Trade)
 export class TradesResolver {
@@ -34,8 +35,11 @@ export class TradesResolver {
   }
 
   @Query(() => [Trade])
-  getUserTrades(@Args('user_uuid') user_uuid: string) {
-    return this.tradeService.findAll(user_uuid);
+  getUserTrades(
+    @Args('user_uuid') user_uuid: string,
+    @Args('state', { nullable: true }) state?: string,
+  ) {
+    return this.tradeService.findAll(user_uuid, state);
   }
 
   @Mutation(() => Boolean)
@@ -51,10 +55,30 @@ export class TradesResolver {
   }
 
   @Mutation(() => [Trade])
-  updateTradeStates(
+  async updateTradeStates(
     @Args('updateStatesInput') updateStatesInput: UpdateStatesInput,
   ) {
-    return this.tradeService.updateStates(updateStatesInput);
+    const result = await this.tradeService.updateStates(updateStatesInput);
+
+    if (updateStatesInput.state === 'Accepted') {
+      // update Items too
+      try {
+        await Promise.all(
+          result.map(async (trade) => {
+            await this.itemsResolver.updateItemStatuses({
+              item_uuids: [
+                ...trade.receiver_item_uuids,
+                ...trade.sender_item_uuids,
+              ],
+              status: 'unlisted',
+            });
+          }),
+        );
+      } catch (e) {
+        throw new GraphQLError('Failed to update items');
+      }
+    }
+    return result;
   }
 
   @ResolveField()
