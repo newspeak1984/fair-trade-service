@@ -89,7 +89,7 @@ type Query {
   getTrades(trade_uuids: [String!]!): [Trade!]!
   getUser(user_uuid: String!): User!
   getUserItems(user_uuid: String!): [Item!]!
-  getUserTrades(user_uuid: String!): [Trade!]!
+  getUserTrades(state: String, user_uuid: String!): [Trade!]!
 }
 
 type Trade {
