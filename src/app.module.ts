@@ -12,6 +12,7 @@ import { ItemsModule } from './items/items.module';
 import { AwsModule } from './aws/aws.module';
 import { TradesModule } from './trades/trades.module';
 import { OptionsModule } from './options/options.module';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -19,6 +20,9 @@ import { OptionsModule } from './options/options.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       driver: ApolloDriver,
+      subscriptions: {
+        'graphql-ws': true,
+      },
       sortSchema: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
@@ -29,6 +33,7 @@ import { OptionsModule } from './options/options.module';
     AwsModule,
     TradesModule,
     OptionsModule,
+    ChatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

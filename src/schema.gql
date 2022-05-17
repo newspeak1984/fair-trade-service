@@ -2,6 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Chat {
+  chat_uuid: String!
+  message: String!
+  receiver_uuid: String!
+  sender_uuid: String!
+  timestamp: DateTime!
+  trade_uuid: String
+}
+
+input CreateChatInput {
+  chat_uuid: String!
+  message: String!
+  receiver_uuid: String!
+  sender_uuid: String!
+  trade_uuid: String
+}
+
 input CreateItemInput {
   category: String!
   description: String!
@@ -62,6 +79,7 @@ input ItemPaginationInput {
 }
 
 type Mutation {
+  createChat(createChatInput: CreateChatInput!): Chat!
   createItem(createItemInput: CreateItemInput!): Item!
   createTrade(createTradeInput: CreateTradeInput!): Trade!
   createUser(createUserInput: CreateUserInput!): User!
@@ -72,6 +90,7 @@ type Mutation {
   updateItemStatuses(updateStatusInput: UpdateStatusInput!): [Item!]!
   updateTradeStates(updateStatesInput: UpdateStatesInput!): [Trade!]!
   updateUser(updateUserInput: UpdateUserInput!): User!
+  upsertTradeChat(upsertTradeChatInput: UpsertTradeChatInput!): TradeChat!
 }
 
 type Options {
@@ -80,16 +99,22 @@ type Options {
 }
 
 type Query {
+  getChats(chat_uuid: String!): [Chat!]!
   getItem(item_uuid: String!): Item!
   getItemPagination(itemPaginationInput: ItemPaginationInput!): ItemPagination!
   getItems(item_uuids: [String!]!): [Item!]!
   getOptions(name: String!): Options!
   getS3PresignedUrl: String!
   getTrade(trade_uuid: String!): Trade!
+  getTradeChat: TradeChat!
   getTrades(trade_uuids: [String!]!): [Trade!]!
   getUser(user_uuid: String!): User!
   getUserItems(user_uuid: String!): [Item!]!
   getUserTrades(state: String, user_uuid: String!): [Trade!]!
+}
+
+type Subscription {
+  newChat: Chat!
 }
 
 type Trade {
@@ -107,6 +132,11 @@ type Trade {
   state: String!
   trade_uuid: String!
   updated_at: DateTime!
+}
+
+type TradeChat {
+  chat_uuid: String!
+  trade_uuid: String!
 }
 
 input UpdateItemInput {
@@ -137,6 +167,11 @@ input UpdateUserInput {
   is_onboarded: Boolean
   last_name: String
   user_uuid: String!
+}
+
+input UpsertTradeChatInput {
+  chat_uuid: String
+  trade_uuid: String
 }
 
 type User {
