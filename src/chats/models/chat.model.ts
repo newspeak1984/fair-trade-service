@@ -8,9 +8,6 @@ export class Chat {
   sender_uuid: string;
 
   @Field()
-  receiver_uuid: string;
-
-  @Field()
   message: string;
 
   @Field({ nullable: true })

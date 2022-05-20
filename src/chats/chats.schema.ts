@@ -12,9 +12,6 @@ export class Chat {
   sender_uuid: string;
 
   @Prop()
-  receiver_uuid: string;
-
-  @Prop()
   message: string;
 
   @Prop()

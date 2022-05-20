@@ -5,7 +5,6 @@
 type Chat {
   chat_uuid: String!
   message: String!
-  receiver_uuid: String!
   sender_uuid: String!
   timestamp: DateTime!
   trade_uuid: String
@@ -14,7 +13,6 @@ type Chat {
 input CreateChatInput {
   chat_uuid: String!
   message: String!
-  receiver_uuid: String!
   sender_uuid: String!
   trade_uuid: String
 }
@@ -106,7 +104,7 @@ type Query {
   getOptions(name: String!): Options!
   getS3PresignedUrl: String!
   getTrade(trade_uuid: String!): Trade!
-  getTradeChat: TradeChat!
+  getTradeChat(trade_uuid: String!): TradeChat!
   getTrades(trade_uuids: [String!]!): [Trade!]!
   getUser(user_uuid: String!): User!
   getUserItems(user_uuid: String!): [Item!]!
@@ -114,7 +112,7 @@ type Query {
 }
 
 type Subscription {
-  newChat: Chat!
+  newChat(chat_uuid: String!): Chat!
 }
 
 type Trade {
@@ -136,6 +134,7 @@ type Trade {
 
 type TradeChat {
   chat_uuid: String!
+  chats: [Chat!]!
   trade_uuid: String!
 }
 

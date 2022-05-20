@@ -8,6 +8,6 @@ export class TradeChat {
   @Field()
   trade_uuid: string;
 
-  // @Field(() => [Chat])
-  // chats: Chat[];
+  @Field(() => [Chat])
+  chats: Chat[];
 }

@@ -1,3 +1,4 @@
+import { ChatsResolver } from './../chats/chats.resolver';
 import { CreateTradeInput } from './dto/create-trade.input';
 import { Trade } from './models/trade.model';
 import {
@@ -20,6 +21,7 @@ export class TradesResolver {
     private tradeService: TradesService,
     private itemsResolver: ItemsResolver,
     private usersResolver: UsersResolver,
+    private chatsResolver: ChatsResolver,
   ) {}
 
   @Query(() => Trade)
@@ -50,8 +52,14 @@ export class TradesResolver {
   }
 
   @Mutation(() => Trade)
-  createTrade(@Args('createTradeInput') createTradeInput: CreateTradeInput) {
-    return this.tradeService.create(createTradeInput);
+  async createTrade(
+    @Args('createTradeInput') createTradeInput: CreateTradeInput,
+  ) {
+    const trade = await this.tradeService.create(createTradeInput);
+    await this.chatsResolver.upsertTradeChat({
+      trade_uuid: trade.trade_uuid,
+    });
+    return trade;
   }
 
   @Mutation(() => [Trade])

@@ -12,5 +12,6 @@ import { MongooseModule } from '@nestjs/mongoose';
     ]),
   ],
   providers: [ChatsResolver, ChatsService],
+  exports: [ChatsResolver],
 })
 export class ChatsModule {}

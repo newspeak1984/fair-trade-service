@@ -18,7 +18,11 @@ export class ChatsService {
   ) {}
 
   async getChats(chat_uuid: string): Promise<Chat[]> {
-    return await this.chatsModel.find({ chat_uuid }).sort({ timestamp: -1 });
+    return await this.chatsModel.find({ chat_uuid }).sort({ timestamp: 1 });
+  }
+
+  async getTradeChat(trade_uuid: string): Promise<TradeChat> {
+    return await this.tradeChatModel.findOne({ trade_uuid });
   }
 
   async saveChat(createChatInput: CreateChatInput): Promise<Chat> {
@@ -30,9 +34,7 @@ export class ChatsService {
     return newChat.save();
   }
 
-  async upsertTradeChat(
-    upsertTradeChatInput: UpsertTradeChatInput,
-  ): Promise<TradeChat> {
+  async upsertTradeChat(upsertTradeChatInput: UpsertTradeChatInput) {
     const chat_uuid = upsertTradeChatInput.chat_uuid || uuidv4();
     const res = await this.tradeChatModel.findOneAndUpdate(
       { chat_uuid },
